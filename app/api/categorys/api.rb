@@ -1,3 +1,5 @@
+require 'grape'
+
 module Categorys
   class API < Grape::API
     version 'v1', using: :path

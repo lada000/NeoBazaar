@@ -1,3 +1,5 @@
+require 'grape'
+
 module Payments
   class API < Grape::API
     version 'v1', using: :path

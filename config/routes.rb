@@ -15,6 +15,6 @@ Rails.application.routes.draw do
   mount Orders::API => '/'
   mount Payments::API => '/'
 
-  get "up" => "rails/health#show", as: :rails_health_check
+  get "up" => "rails/health#show", as: :rails_health_chec
 
 end

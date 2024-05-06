@@ -1,3 +1,5 @@
+require 'grape'
+
 module Carts
   class API < Grape::API
     version 'v1', using: :path
