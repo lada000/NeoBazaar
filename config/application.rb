@@ -10,4 +10,12 @@ module NeoBazaar02
     config.autoload_lib(ignore: %w(assets tasks))
     config.api_only = true
   end
+
+  Users::API.compile!
+  Products::API.compile!
+  Payments::API.compile!
+  Orders::API.compile!
+  Categorys::API.compile!
+  Cart_Items::API.compile!
+  Carts::API.compile!
 end

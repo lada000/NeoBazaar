@@ -1,4 +1,4 @@
-module CartItemAPI
+module CartItems
   class API < Grape::API
     version 'v1', using: :path
     format :json

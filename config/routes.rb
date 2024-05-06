@@ -7,13 +7,13 @@ Rails.application.routes.draw do
   resources :products
   resources :users
 
-  mount User::API => '/'
-  mount Product::API => '/product/product_api'
-  mount Cart::API => '/cart/cart_api'
-  mount CartItem::API => '/cart_item/cart_item_api'
-  mount Category::API => '/category/category_api'
-  mount Order::API => '/order/order_api'
-  mount Payment::API => '/payment/payment_api'
+  mount Users::API => '/'
+  mount Products::API => '/'
+  mount Carts::API => '/'
+  mount CartItems::API => '/'
+  mount Categorys::API => '/'
+  mount Orders::API => '/'
+  mount Payments::API => '/'
 
   get "up" => "rails/health#show", as: :rails_health_check
 

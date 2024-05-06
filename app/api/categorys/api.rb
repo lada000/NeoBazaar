@@ -1,4 +1,4 @@
-module CategoryAPI
+module Categorys
   class API < Grape::API
     version 'v1', using: :path
     format :json
