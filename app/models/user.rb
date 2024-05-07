@@ -12,6 +12,10 @@ class User < ApplicationRecord
     role == 'admin'
   end
 
+  def self.create!(username:, email:, password:)
+    # code here
+  end
+
   private
 
   def assign_admin_if_necessary

@@ -4,12 +4,11 @@ module Products
   class API < Grape::API
     version 'v1', using: :path
     format :json
-    prefix :api
 
     resource :products do
       desc 'Return all products'
       get do
-        ::Product.all
+        Product.all
       end
 
       desc 'Return a product'
@@ -18,7 +17,7 @@ module Products
       end
       route_param :id do
         get do
-          ::Product.find(params[:id])
+          Product.find(params[:id])
         end
       end
 
@@ -28,7 +27,7 @@ module Products
         requires :price, type: Float, desc: 'Product Price'
       end
       post do
-        ::Product.create!(
+        Product.create!(
           name: params[:name],
           price: params[:price]
         )

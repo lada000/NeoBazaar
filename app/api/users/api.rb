@@ -4,12 +4,11 @@ module Users
   class API < Grape::API
     version 'v1', using: :path
     format :json
-    prefix :api
 
     resource :users do
       desc 'Return all users'
       get do
-        ::User.all
+        User.all
       end
 
       desc 'Return a user'
@@ -18,7 +17,7 @@ module Users
       end
       route_param :id do
         get do
-          ::User.find(params[:id])
+          User.find(params[:id])
         end
       end
 
@@ -29,7 +28,7 @@ module Users
         requires :password, type: String, desc: 'Password'
       end
       post do
-        ::User.create!(
+        User.create!(
           username: params[:username],
           email: params[:email],
           password: params[:password]
