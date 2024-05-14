@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  devise_for :users, skip: [:sessions, :passwords], controllers: {
+    registrations: 'users/registrations'
+  }
   resources :cart_items
   resources :orders
   resources :categories
@@ -7,6 +10,7 @@ Rails.application.routes.draw do
   resources :products
   resources :users
 
-  mount API => '/'
+  root 'home#index'
 
+  mount API => '/'
 end
