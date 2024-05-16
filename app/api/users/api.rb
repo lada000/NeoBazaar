@@ -34,7 +34,7 @@ module Users
           password: params[:password]
         )
 
-        user.save ? user : { errors: user.errors }
+        user.save ? user.attributes.except('password') : { errors: user.errors }
       end
     end
   end
