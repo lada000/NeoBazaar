@@ -28,17 +28,13 @@ module Users
         requires :password, type: String, desc: 'Password'
       end
       post do
-        u = User.create(
+        user = User.new(
           username: params[:username],
           email: params[:email],
           password: params[:password]
         )
 
-        if u.save
-          'good'
-        else
-          'bad'
-        end
+        user.save ? user : { errors: user.errors }
       end
     end
   end
