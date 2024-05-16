@@ -34,7 +34,8 @@ module Users
           password: params[:password]
         )
 
-        user.save ? user.attributes.except('password') : { errors: user.errors }
+        attributes = %w[id username email]
+        user.save ? user.attributes.slice(*attributes) : { errors: user.errors }
       end
     end
   end
