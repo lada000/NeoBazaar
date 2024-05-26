@@ -8,6 +8,8 @@ gem "rails", "~> 7.1.3", ">= 7.1.3.2"
 gem "grape", "~> 2.0"
 gem 'grape-swagger'
 gem "devise"
+gem 'rack-cors', require: 'rack/cors'
+
 
 gem "pg", "~> 1.1"
 gem "puma", ">= 5.0"
