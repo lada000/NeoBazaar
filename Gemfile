@@ -5,10 +5,11 @@ ruby "3.2.2"
 gem "rails", "~> 7.1.3", ">= 7.1.3.2"
 
 #custom
-gem "grape", "~> 2.0"
-gem 'grape-swagger'
 gem "devise"
-gem 'rack-cors', require: 'rack/cors'
+gem "devise-jwt"
+gem "grape", "~> 2.0"
+gem "grape-swagger"
+gem "rack-cors", require: "rack/cors"
 
 
 gem "pg", "~> 1.1"

@@ -1,8 +1,12 @@
 class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  include Devise::JWT::RevocationStrategies::JTIMatcher
+
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable, :validatable,
+         :jwt_authenticatable, jwt_revocation_strategy: self
+
+  before_create :set_jti
+
   has_many :products
   has_many :carts
   has_many :orders
@@ -21,6 +25,10 @@ class User < ApplicationRecord
   end
 
   private
+
+  def set_jti
+    self.jti ||= SecureRandom.uuid
+  end
 
   def assign_admin_if_necessary
     self.role = 'admin' if email == ENV['ADMIN_EMAIL']
