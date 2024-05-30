@@ -20,9 +20,9 @@ class User < ApplicationRecord
     role == 'admin'
   end
 
-  def self.create!(username:, email:, password:)
-    # code here
-  end
+  # def self.create!(username:, email:, password:)
+  #   # code here
+  # end
 
   private
 

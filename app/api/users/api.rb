@@ -5,6 +5,26 @@ module Users
     version 'v1', using: :path
     format :json
 
+    helpers do
+      def current_user
+        @current_user ||= User.find_by(jti: payload['jti']) if payload
+      end
+
+      def authenticate!
+        error!('Unauthorized. Invalid or expired token.', 401) unless current_user
+      end
+
+      private
+
+      def payload
+        auth_header = headers['authorization']
+        token = auth_header.split(' ').last if auth_header
+        JWT.decode(token, Rails.application.credentials.devise_jwt_secret_key, true, algorithm: 'HS256')[0] rescue nil
+      end
+    end
+
+    before { authenticate! }
+
     resource :users do
       desc 'Return all users'
       get do

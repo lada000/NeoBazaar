@@ -8,7 +8,7 @@ Rails.application.routes.draw do
     sessions: 'users/sessions',
     registrations: 'users/registrations'
   }
-  
+
   resources :cart_items
   resources :orders
   resources :categories
