@@ -2,6 +2,7 @@
 
 class Users::SessionsController < Devise::SessionsController
   include RackSessionsFix
+  before_action :authenticate_user! # try to fix
 
   respond_to :json
   # before_action :configure_sign_in_params, only: [:create]
@@ -32,7 +33,7 @@ class Users::SessionsController < Devise::SessionsController
 
   def respond_with(current_user, _opts = {})
     puts "DEBUG: user_id: #{current_user.id}, username: #{current_user.username}"
-    
+
     render json: {
       status: {
         code: 200, message: 'Logged in successfully.',
