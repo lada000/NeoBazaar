@@ -9,7 +9,7 @@ class Users::SessionsController < Devise::SessionsController
 
   # GET /resource/sign_in
   def new
-    puts "ERROR new" # try to fix
+    render json: { error: "ERROR new" } # try to fix
   end
 
   # POST /resource/sign_in
