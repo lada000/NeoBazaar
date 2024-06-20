@@ -5,6 +5,8 @@ class Users::PasswordsController < Devise::PasswordsController
 
   # POST /resource/password
   def create
+    logger.info "Received parameters: #{params.inspect}"
+
     self.resource = resource_class.send_reset_password_instructions(resource_params)
     yield resource if block_given?
 
@@ -13,10 +15,15 @@ class Users::PasswordsController < Devise::PasswordsController
     else
       render json: { error: resource.errors.full_messages }, status: :unprocessable_entity
     end
+  rescue StandardError => e
+    logger.error "Error occurred while sending reset password instructions: #{e.message}"
+    render json: { error: 'An error occurred while processing your request. Please try again later.' }, status: :internal_server_error
   end
 
   # PUT /resource/password
   def update
+    logger.info "Received parameters: #{params.inspect}"
+
     self.resource = resource_class.reset_password_by_token(resource_params)
     yield resource if block_given?
 
@@ -26,6 +33,9 @@ class Users::PasswordsController < Devise::PasswordsController
     else
       render json: { error: resource.errors.full_messages }, status: :unprocessable_entity
     end
+  rescue StandardError => e
+    logger.error "Error occurred while resetting password: #{e.message}"
+    render json: { error: 'An error occurred while processing your request. Please try again later.' }, status: :internal_server_error
   end
 
   private

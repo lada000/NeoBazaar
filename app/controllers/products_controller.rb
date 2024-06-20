@@ -4,7 +4,6 @@ class ProductsController < ApplicationController
   # GET /products
   def index
     @products = Product.all
-
     render json: @products
   end
 
@@ -35,17 +34,18 @@ class ProductsController < ApplicationController
 
   # DELETE /products/1
   def destroy
-    @product.destroy!
+    @product.destroy
+    head :no_content
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
+
     def set_product
       @product = Product.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
     def product_params
-      params.require(:product).permit(:title, :description, :price, :image, :category)
+      params.require(:product).permit(:title, :description, :price, :category_id, :status, :currency, :allow_customers_to_pay_what_they_want, :quantity_for_sale, :delivery_time, :image, :thumbnail, :file)
     end
 end
