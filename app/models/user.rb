@@ -5,6 +5,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :jwt_authenticatable, jwt_revocation_strategy: self
 
+  validates :reset_password_token, length: { is: 8 }, allow_nil: true
+
   before_create :set_jti
 
   has_many :products

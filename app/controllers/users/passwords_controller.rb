@@ -5,8 +5,6 @@ class Users::PasswordsController < Devise::PasswordsController
 
   # POST /resource/password
   def create
-    logger.info "Received parameters: #{params.inspect}"
-
     self.resource = resource_class.send_reset_password_instructions(resource_params)
     yield resource if block_given?
 
@@ -15,15 +13,22 @@ class Users::PasswordsController < Devise::PasswordsController
     else
       render json: { error: resource.errors.full_messages }, status: :unprocessable_entity
     end
-  rescue StandardError => e
-    logger.error "Error occurred while sending reset password instructions: #{e.message}"
-    render json: { error: 'An error occurred while processing your request. Please try again later.' }, status: :internal_server_error
+  end
+
+  # POST /resource/password/verify_token
+  def verify_token
+    token = params[:token]
+    user = User.find_by(reset_password_token: Devise.token_generator.digest(User, :reset_password_token, token))
+
+    if user && user.reset_password_period_valid?
+      render json: { message: 'Token is valid.' }, status: :ok
+    else
+      render json: { error: 'Invalid or expired token.' }, status: :unprocessable_entity
+    end
   end
 
   # PUT /resource/password
   def update
-    logger.info "Received parameters: #{params.inspect}"
-
     self.resource = resource_class.reset_password_by_token(resource_params)
     yield resource if block_given?
 
@@ -33,14 +38,11 @@ class Users::PasswordsController < Devise::PasswordsController
     else
       render json: { error: resource.errors.full_messages }, status: :unprocessable_entity
     end
-  rescue StandardError => e
-    logger.error "Error occurred while resetting password: #{e.message}"
-    render json: { error: 'An error occurred while processing your request. Please try again later.' }, status: :internal_server_error
   end
 
   private
 
   def resource_params
-    params.require(:user).permit(:email, :password, :password_confirmation, :reset_password_token)
+    params.require(:user).permit(:email, :password, :password_confirmation, :reset_password_token, :token)
   end
 end

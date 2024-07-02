@@ -1,7 +1,7 @@
 class UpdateProducts < ActiveRecord::Migration[7.1]
   def change
     change_table :products do |t|
-      t.integer :product_id, null: false
+      t.integer :product_id, null: false # ????????? зачем он нужен?
       t.date :date, null: false, default: -> { 'CURRENT_DATE' }
       t.string :status, null: false, default: 'Draft'
       t.string :currency, null: false

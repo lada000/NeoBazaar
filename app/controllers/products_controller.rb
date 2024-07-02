@@ -14,7 +14,7 @@ class ProductsController < ApplicationController
 
   # POST /products
   def create
-    @product = Product.new(product_params)
+    @product = Product.new(product_params.merge(user_id: user_params[:user_id]))
 
     if @product.save
       render json: @product, status: :created, location: @product
@@ -46,6 +46,11 @@ class ProductsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def product_params
+      # читать как достать user-id и примешать его к Product
       params.require(:product).permit(:title, :description, :price, :category_id, :status, :currency, :allow_customers_to_pay_what_they_want, :quantity_for_sale, :delivery_time, :image, :thumbnail, :file)
+    end
+
+    def user_params
+      params.permit(:user_id)
     end
 end
